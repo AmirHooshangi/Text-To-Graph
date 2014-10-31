@@ -8,11 +8,11 @@ object AcmgsBuild extends Build {
     base = file("."),
     settings = Project.defaultSettings ++ Seq(
       name := "ACMG-S",
-      organization := "com.veloring",
+      organization := "com.velorin",
       version := "0.1-SNAPSHOT",
-      scalaVersion := "2.9.2",
+      scalaVersion := "2.11.2",
       resolvers += "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases",
-      libraryDependencies += "com.typesafe.akka" % "akka-actor" % "2.3.6"
+      libraryDependencies += "com.typesafe.akka" % "akka-actor_2.10" % "2.3.6"
     )
   )
 }
