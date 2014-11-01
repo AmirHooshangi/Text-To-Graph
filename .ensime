@@ -1,0 +1,23 @@
+(
+ :root-dir "/Users/amir/ACMG-S"
+ :cache-dir "/Users/amir/ACMG-S/.ensime_cache"
+ :name "acmg-s"
+ :java-home "/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home"
+ :java-flags ("-XX:PermSize=512M" "-Xms512M" "-Xmx1536M" "-Xss1M" "-XX:+CMSClassUnloadingEnabled")
+ :reference-source-roots ("/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/src.zip")
+ :scala-version "2.11.2"
+ :compiler-args nil
+ 
+ :subprojects ((
+   :name "acmg-s"
+   :module-name "acmg-s"
+   :source-roots ("/Users/amir/ACMG-S/src/main/scala" "/Users/amir/ACMG-S/src/main/java" "/Users/amir/ACMG-S/src/test/scala" "/Users/amir/ACMG-S/src/test/java")
+   :target "/Users/amir/ACMG-S/target/scala-2.11/classes"
+   :test-targets ("/Users/amir/ACMG-S/target/scala-2.11/test-classes")
+   :depends-on-modules nil
+   :compile-deps ("/Users/amir/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.2.jar" "/Users/amir/.ivy2/cache/com.typesafe.akka/akka-actor_2.10/jars/akka-actor_2.10-2.3.6.jar" "/Users/amir/.ivy2/cache/com.typesafe/config/bundles/config-1.2.1.jar")
+   :runtime-deps nil
+   :test-deps nil
+   :reference-source-roots ("/Users/amir/.ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.11.2-sources.jar" "/Users/amir/.ivy2/cache/com.typesafe.akka/akka-actor_2.10/srcs/akka-actor_2.10-2.3.6-sources.jar" "/Users/amir/.ivy2/cache/com.typesafe/config/srcs/config-1.2.1-sources.jar")))
+ 
+)
