@@ -24,7 +24,7 @@ class NLPConceptMiner extends ConceptMiner {
     concepts
   }
 
-  def recursiveTypefinder(parse: opennlp.tools.parser.Parse): Unit  = {
+  def recursiveTypefinder(parse: opennlp.tools.parser.Parse): Unit = {
     /*
      * TODO: CHECKING ONE OR TWO WORDS NP's
      */
@@ -32,7 +32,8 @@ class NLPConceptMiner extends ConceptMiner {
     if (parse.getType().equals("NN") || parse.getType().equals("JJ")
       || parse.getType().equals("NNS")
       || parse.getType().equals("NNP")) {
-    concepts.add(parse.getCoveredText)
+      println(parse.getCoveredText)
+      concepts.add(parse.getCoveredText)
     }
 
     for (child <- parse.getChildren) {
