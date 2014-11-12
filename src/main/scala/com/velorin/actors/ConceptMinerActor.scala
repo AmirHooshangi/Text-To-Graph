@@ -11,7 +11,7 @@ class ConceptMinerActor extends Actor{
  def receive =  {
     case URLEvent(url: URL, text: String) => {
       val nlpConceptMiner: NLPConceptMiner = new NLPConceptMiner
-      nlpConceptMiner.getListOfConcepts(text)
+      nlpConceptMiner.getListOfConcepts(text).foreach(println)
       }
   }
 
