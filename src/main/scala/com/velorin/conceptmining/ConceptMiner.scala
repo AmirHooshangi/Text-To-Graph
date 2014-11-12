@@ -1,6 +1,6 @@
 package com.velorin.conceptmining
 
-import scala.collection.mutable.Set
+//import scala.collection.mutable.Set
 
 trait ConceptMiner {
 
