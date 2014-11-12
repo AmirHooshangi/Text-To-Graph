@@ -7,7 +7,7 @@ import opennlp.tools.parser.ParserFactory
 import opennlp.tools.parser.ParserModel
 import opennlp.tools.sentdetect.SentenceDetectorME
 import opennlp.tools.sentdetect.SentenceModel
-import scala.collection.mutable.Set
+//import scala.collection.mutable.Set
 
 class NLPConceptMiner extends ConceptMiner {
 
@@ -16,15 +16,18 @@ class NLPConceptMiner extends ConceptMiner {
   def getListOfConcepts(text: String): Set[String] = {
     val parser = ParserFactory.create(NLPConceptMiner.parserModel)
     val listOfSentences = getListOfSentences(text)
+    val parses: Array[Parse] = listOfSentences.flatMap(x => ParserTool.parseLine(x, parser, 1))
+    val concepts = parses.flatMap(recursiveTypefinder)
+    println("Size of List is = " + concepts.toSet.size)
+    concepts.toSet
+//    for (tokenizedSentence <- listOfSentences) {
+//      var parses: Array[Parse] = ParserTool.parseLine(tokenizedSentence, parser, 1)
+//      concepts ::: recursiveTypefinder(parses(0))
+//    }
 
-    for (tokenizedSentence <- listOfSentences) {
-      var parses: Array[Parse] = ParserTool.parseLine(tokenizedSentence, parser, 1)
-      recursiveTypefinder(parses(0))
-    }
-    concepts
   }
 
-  def recursiveTypefinder(parse: opennlp.tools.parser.Parse): Unit = {
+  def recursiveTypefinder1(parse: opennlp.tools.parser.Parse): Unit = {
     /*
      * TODO: CHECKING ONE OR TWO WORDS NP's
      */
@@ -33,12 +36,20 @@ class NLPConceptMiner extends ConceptMiner {
       || parse.getType().equals("NNS")
       || parse.getType().equals("NNP")) {
       println(parse.getCoveredText)
-      concepts.add(parse.getCoveredText)
+//      concepts.add(parse.getCoveredText)
     }
 
     for (child <- parse.getChildren) {
-      recursiveTypefinder(child)
+      recursiveTypefinder1(child)
     }
+  }
+
+  def recursiveTypefinder(parse: opennlp.tools.parser.Parse): List[String] = {
+    val concepts = parse.getType match {
+      case "NN" | "JJ" | "NNS" | "NNP"  => {   List(parse.getCoveredText) }
+      case _ => Nil
+    }
+    concepts ::: parse.getChildren.flatMap(recursiveTypefinder).toList
   }
 
   def getListOfSentences(paragraph: String): Array[String] = {
