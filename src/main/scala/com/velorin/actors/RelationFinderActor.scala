@@ -32,6 +32,7 @@ class RelationFinderActor extends Actor{
 
     val function =  WsFactory.calculationFunction("WuPalmer")
     println("similiarity bet " + concept1 + " and " + concept2 + " = " + function(concept1,concept2))
+    //TODO: 0.4 is a constant, it should be customizable
     if(function(concept1,concept2) > 0.4 ) true else false
   }
 }
