@@ -16,8 +16,10 @@ object AcmgsBuild extends Build {
       resolvers += "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases",
       libraryDependencies ++= Seq(
         "com.typesafe.akka" %% "akka-actor" % "2.3.6",
+        "org.scalatest" %% "scalatest" % "2.2.1" % "test",
         "org.apache.opennlp" % "opennlp-tools" % "1.5.3",
         "edu.cmu.lti" % "ws4j" % "1.0.1",
+        "edu.cmu.lti" % "jawjaw" % "1.0.2",
         "org.apache.tika" % "tika-core" % "1.6",
         "org.apache.tika" % "tika-parsers" % "1.6"
       )
