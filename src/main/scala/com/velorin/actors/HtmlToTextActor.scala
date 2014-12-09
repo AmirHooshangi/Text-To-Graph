@@ -16,9 +16,9 @@ import org.xml.sax.ContentHandler
 class HtmlToTextActor(actorRef: ActorRef) extends Actor {
 
   def receive =  {
-    case URLEvent(url: URL, text: String ) => {
+    case URLEvent(url: URL, text: String, listOfConcepts: List[String] ) => {
       println("message recieved i repeat ! message recieved")
-      actorRef ! new URLEvent(url, extractText(url))
+      actorRef ! new URLEvent(url, extractText(url), List())
       }
   }
 
