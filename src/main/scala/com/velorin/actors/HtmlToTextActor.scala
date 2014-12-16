@@ -9,6 +9,7 @@ import java.net.URL
 import org.apache.tika.metadata.Metadata
 import org.apache.tika.parser.ParseContext
 import org.apache.tika.parser.html.HtmlParser
+import org.apache.tika.sax
 import org.apache.tika.sax.BodyContentHandler
 import org.xml.sax.ContentHandler
 
@@ -24,7 +25,7 @@ class HtmlToTextActor(actorRef: ActorRef) extends Actor {
 
   def extractText(url: URL) : String = {
     val input:  InputStream =  url.openStream()
-    val handler: ContentHandler = new BodyContentHandler()
+    val handler: ContentHandler = new BodyContentHandler(Int.MaxValue)
     val metadata: Metadata  = new Metadata()
     new HtmlParser().parse(input, handler, metadata, new ParseContext())
     handler.toString()
