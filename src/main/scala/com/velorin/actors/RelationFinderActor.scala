@@ -7,7 +7,7 @@ import com.velorin.conceptmining.ConceptMiner
 import com.velorin.conceptmining.NLPConceptMiner
 import com.velorin.wordnet.WsFactory
 
-class RelationFinderActor extends Actor{
+class RelationFinderActor(actorRef: ActorRef) extends Actor{
 
  def receive =  {
     case URLEvent(url: URL, text: String, concepts: List[String]) => {
@@ -16,15 +16,18 @@ class RelationFinderActor extends Actor{
 
                               relatedList = relatedConcepts(concepts(i), concepts.slice( i+1, concepts.size))
 
-      } yield  relatedList
+      } yield  if(  relatedList != null) concepts(i) :: relatedList else relatedList
 
       listOfLists.filter(_ != null).foreach(println)
+      actorRef ! SaveToDBEvent(url, listOfLists.filter(_ != null).toList)
     }
+
   }
 
   def relatedConcepts(arg1: String, arg2: List[String]) : List[String] = {
 
     val list = for { i <- arg2; if areRelated(arg1,i)} yield i
+    //TODO: null is avoided in Scala please consider it :)
     if(list.isEmpty) null else list
   }
 
