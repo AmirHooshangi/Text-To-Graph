@@ -26,7 +26,7 @@ class StoreToDBActor extends Actor with Neo4jWrapper with EmbeddedGraphDatabaseS
     shutdown(ds)
   }
 */
-
+ //TODO: should move to the another class
  override def neo4jStoreDir: String = "db/test"
 
 
