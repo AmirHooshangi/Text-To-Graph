@@ -21,9 +21,14 @@ object NLPConceptMiner extends ConceptMiner {
     concepts.toSet
   }
 
+  //TODO: two words NN, removing 's and dots
+
   def recursiveTypefinder(parse: opennlp.tools.parser.Parse): List[String] = {
     val concepts = parse.getType match {
-      case "NN" | "JJ" | "NNS" | "NNP"  => {   List(parse.getCoveredText) }
+      case "NN" | "JJ" /* | "NNS" | "NNP" */  => { List(if(parse.getCoveredText.contains(".") |
+        parse.getCoveredText.contains(",") | parse.getCoveredText.contains("’s") | parse.getCoveredText.contains("\"") )
+        parse.getCoveredText.replaceAll("(\"|.|’s|'s|,)", "")
+        else parse.getCoveredText)  }
       case _ => Nil
     }
     concepts ::: parse.getChildren.flatMap(recursiveTypefinder).toList
