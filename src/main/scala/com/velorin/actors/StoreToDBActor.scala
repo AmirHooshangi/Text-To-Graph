@@ -38,6 +38,8 @@ class StoreToDBActor extends Actor with Neo4jWrapper with EmbeddedGraphDatabaseS
         storeToDB(i)
 
       shutdown(ds)
+
+      println("finished..........................................")
     }
   }
 
