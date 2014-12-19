@@ -18,3 +18,8 @@ project/plugins/project/
 
 *#
 *~
+.idea/
+db/
+projectFilesBackup/
+*.bin
+*.db
