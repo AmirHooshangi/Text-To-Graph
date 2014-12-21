@@ -1,12 +1,18 @@
 package com.velorin.actors
 
+import java.io.FileInputStream
+
 import akka.actor.Actor
 import akka.actor.ActorRef
 import java.net.URL
 import com.velorin.model.{NodeList, Node}
 import com.velorin.wordnet.WsFactory
+import java.util.Properties
 
 class RelationFinderActor(actorRef: ActorRef) extends Actor{
+
+  val prop = new Properties()
+  prop.load(this.getClass.getResourceAsStream("/WSparameter.properties"))
 
  def receive =  {
     case URLEvent(url: URL, text: String, concepts: List[String]) => {
@@ -32,10 +38,9 @@ class RelationFinderActor(actorRef: ActorRef) extends Actor{
 
   def areRelated(concept1: String, concept2: String): (Boolean, String) = {
 
-    val function =  WsFactory.calculationFunction("WuPalmer")
+    val function =  WsFactory.calculationFunction(prop.getProperty("similiarity-method"))
     println("similiarity bet " + concept1 + " and " + concept2 + " = " + function(concept1,concept2))
     val weight = function(concept1,concept2)
-    //TODO: 0.4 is a constant, it should be customizable
-    if( weight > 0.4 ) (true, weight.toString) else (false , weight.toString)
+    if( weight > prop.getProperty("similiarity-treshhold").toDouble ) (true, weight.toString) else (false , weight.toString)
   }
 }
