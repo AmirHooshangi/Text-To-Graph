@@ -68,6 +68,7 @@ object NLPConceptMiner extends ConceptMiner {
     val concepts = parse.getType match {
       //TODO: two words NN, removing 's and dots
       case "NN" | "JJ" /* | "NNS" | "NNP" */  => { List(if(parse.getCoveredText.contains(".") |
+        parse.getCoveredText.contains("-") |
         parse.getCoveredText.contains(",") | parse.getCoveredText.contains("’s") | parse.getCoveredText.contains("\"") )
         parse.getCoveredText.replaceAll("(\"|.|’s|'s|,)", "")
         else parse.getCoveredText)  }
