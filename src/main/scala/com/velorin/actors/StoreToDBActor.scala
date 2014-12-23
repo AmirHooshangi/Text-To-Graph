@@ -63,7 +63,7 @@ class StoreToDBActor extends Actor with Neo4jWrapper with EmbeddedGraphDatabaseS
     val query = "START n=node(*), m=node(*)  " +
       "\n where has(n.name) and has(m.name) and n.name = "+ "\'"+ node1.name + "\'" +
       "\n and m.name = " + "\'" +  node2.name + "\'" +
-      "\n create (n)-[r:R { weight : " + "\'" + node2.weight + "\'" +" }]-(m)"
+      "\n create (n)-[r:R { weight : " + "\'" + node2.weight + "\'" +" }]->(m)"
     withTx {
       implicit neo =>
         query.execute
@@ -72,8 +72,10 @@ class StoreToDBActor extends Actor with Neo4jWrapper with EmbeddedGraphDatabaseS
 
   def create_node(name: String, value: String) = {
     withTx {
-      implicit neo =>
-        createNode(Test_Matrix(name, value))
+      val query = "CREATE (n:" + name + " { name:"+ "\"" +  name  + "\"" + " })"
+        implicit neo =>
+          query.execute
+              //createNode(Test_Matrix(name, value))
     }
   }
 
