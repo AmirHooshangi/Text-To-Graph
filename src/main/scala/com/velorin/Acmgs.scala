@@ -13,7 +13,7 @@ object Acmgs extends App {
   val relationFinderActor: ActorRef = system.actorOf(Props(new RelationFinderActor(storeToDBActor)), "relation_finder")
   val conceptMinerActor: ActorRef = system.actorOf(Props(new ConceptMinerActor(relationFinderActor)), "concept_miner")
   val html2textActor: ActorRef = system.actorOf(Props(new HtmlToTextActor(conceptMinerActor)), "html2text")
- // html2textActor ! new URLEvent(new URL("file:///Users/amir/Desktop/Computer.html"), "a", List())
-   html2textActor ! new URLEvent(new URL("https://support.apple.com/en-us/HT202225"), "a", List())
+  html2textActor ! new URLEvent(new URL("file:///Users/amir/Desktop/Computer.html"), "a", List())
+  //html2textActor ! new URLEvent(new URL("http://en.wikipedia.org/wiki/Programming_language"), "a", List())
 
 }
