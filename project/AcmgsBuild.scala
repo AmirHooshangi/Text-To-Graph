@@ -22,8 +22,8 @@ object AcmgsBuild extends Build {
         "org.apache.opennlp" % "opennlp-tools" % "1.5.3",
         "edu.cmu.lti" % "ws4j" % "1.0.1",
         "edu.cmu.lti" % "jawjaw" % "1.0.2",
-        "org.neo4j" % "neo4j" % "2.1.3",
-        "eu.fakod" %% "neo4j-scala" % "0.3.1-SNAPSHOT",
+        "org.neo4j" % "neo4j" % "2.2.2",
+        "eu.fakod" %% "neo4j-scala" % "0.3.4-SNAPSHOT",
         "org.apache.tika" % "tika-core" % "1.6",
         "org.apache.tika" % "tika-parsers" % "1.6"
       )
