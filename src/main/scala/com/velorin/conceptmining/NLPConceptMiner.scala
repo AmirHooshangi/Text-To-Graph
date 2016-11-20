@@ -8,7 +8,6 @@ import opennlp.tools.parser.ParserFactory
 import opennlp.tools.parser.ParserModel
 import opennlp.tools.sentdetect.SentenceDetectorME
 import opennlp.tools.sentdetect.SentenceModel
-import opennlp.tools.stemmer.snowball.SnowballStemmer
 
 object NLPConceptMiner extends ConceptMiner {
 
@@ -80,8 +79,18 @@ object NLPConceptMiner extends ConceptMiner {
   }
 
    def  wordCleaner( word: String) : String = {
-     val cleanedWord = porterStemmer.stemWord(word)
-     cleanedWord.replaceAll("[^A-Za-z]+", "")
+     var cleanedWord = porterStemmer.stemWord(word)
+     cleanedWord = cleanedWord.replaceAll("[^A-Za-z]+", "")
+  //   cleanedWord = cleanedWord.toLowerCase
+     if(cleanedWord.contains(".") |
+       cleanedWord.contains("-") |
+       cleanedWord.contains(",") |
+       cleanedWord.contains("’s") |
+       cleanedWord.contains("\"") ) {
+       cleanedWord = cleanedWord.replaceAll("(\"|.|’s|'s|,)", "")
+     }
+     cleanedWord
+ //
    }
 
   def getListOfSentences(paragraph: String): Array[String] = {
