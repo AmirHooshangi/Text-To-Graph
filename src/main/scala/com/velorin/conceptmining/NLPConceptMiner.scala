@@ -1,5 +1,6 @@
 package com.velorin.conceptmining
 
+import edu.cmu.lti.ws4j.util.PorterStemmer
 import opennlp.tools.cmdline.parser.ParserTool
 import opennlp.tools.parser.Parse
 import opennlp.tools.parser.Parser
@@ -7,6 +8,7 @@ import opennlp.tools.parser.ParserFactory
 import opennlp.tools.parser.ParserModel
 import opennlp.tools.sentdetect.SentenceDetectorME
 import opennlp.tools.sentdetect.SentenceModel
+import opennlp.tools.stemmer.snowball.SnowballStemmer
 
 object NLPConceptMiner extends ConceptMiner {
 
@@ -64,18 +66,23 @@ object NLPConceptMiner extends ConceptMiner {
   WP$ Possessive wh­pronoun
   WRB Whadverb
 */
+
+  val porterStemmer =  new PorterStemmer
+
   def recursiveTypefinder(parse: opennlp.tools.parser.Parse): List[String] = {
+
     val concepts = parse.getType match {
       //TODO: two words NN, removing 's and dots
-      case "NN" | "JJ" /* | "NNS" | "NNP" */  => { List(if(parse.getCoveredText.contains(".") |
-        parse.getCoveredText.contains("-") |
-        parse.getCoveredText.contains(",") | parse.getCoveredText.contains("’s") | parse.getCoveredText.contains("\"") )
-        parse.getCoveredText.replaceAll("(\"|.|’s|'s|,)", "")
-        else parse.getCoveredText)  }
+      case "NN" | "JJ"  | "NNS" | "NNP"   => { List( wordCleaner(parse.getCoveredText) )}
       case _ => Nil
     }
     concepts ::: parse.getChildren.flatMap(recursiveTypefinder).toList
   }
+
+   def  wordCleaner( word: String) : String = {
+     val cleanedWord = porterStemmer.stemWord(word)
+     cleanedWord.replaceAll("[^A-Za-z]+", "")
+   }
 
   def getListOfSentences(paragraph: String): Array[String] = {
     val sentenceFinderME = new SentenceDetectorME(NLPConceptMiner.sentenceModel)
