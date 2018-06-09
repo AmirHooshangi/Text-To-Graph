@@ -1,4 +1,4 @@
-ACMG-S
+Text-To-Graph (In Scala and Akka)
 ======
 
 # Graph representation of a Text using Neo4j.
